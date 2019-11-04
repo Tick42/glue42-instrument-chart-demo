@@ -7,8 +7,8 @@ instrument chart.
 
 # Instructions:
 1. Install Glue42 Enterprise.
-2. Clone the repository to a local directory, e.g. C:\work\customer-watchlist.
-3. Open a command prompt and navigate to the folder (e.g. `cd C:\work\customer-watchlist`).
+2. Clone the repository to a local directory, e.g. C:\work\instrument-chart.
+3. Open a command prompt and navigate to the folder (e.g. `cd C:\work\instrument-chart`).
 4. Run `npm install`.
 5. Navigate to the `glue42` subdirectory via File Explorer.
 6. Start the `start.bat` file via a double-click.

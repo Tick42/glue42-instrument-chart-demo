@@ -145,10 +145,10 @@ class App extends Component<{}, {title: string, security: DisplayEntry, data: an
     return (
       <div className="App">
         <nav className="navbar navbar-light bg-light justify-content-center mb-4">
-          <img src={logo} height="50" className="d-inline-block align-top mr-3" alt="Customer Watchlist Logo" />
+          <img src={logo} height="50" className="d-inline-block align-top mr-3" alt="Instrument Chart Logo" />
           <span className="display-1">{this.state.title}</span>
         </nav>
-          <Container className="customer-watchlist-container">
+          <Container className="instrument-chart-container">
             <Row>
               <Col>
                 { (this.state.data && this.state.data.length > 0) ? <InstrumentChart type="hybrid" data={this.state.data} midPrice={this.state.midPrice} symbol={this.state.security.ric} /> : "Loading..." }

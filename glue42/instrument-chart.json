@@ -19,7 +19,7 @@
       "includeInClientWorkspace": true,
       "appManagerOrder": 4,
       "consumes": [
-        "watchlist"
+        "ticker"
       ]
     }
   },
@@ -44,7 +44,7 @@
       "includeInClientWorkspace": true,
       "appManagerOrder": 4,
       "consumes": [
-        "watchlist"
+        "ticker"
       ]
     }
   }
