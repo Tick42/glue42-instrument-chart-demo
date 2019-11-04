@@ -16,4 +16,4 @@ instrument chart.
 8. Use the App Manager dropdown to start the **Instrument Chart**
 
 # Result:
-![Screenshot](./demo-screenshot.png)
+![Screenshot](./instrument-chart-result.png)
