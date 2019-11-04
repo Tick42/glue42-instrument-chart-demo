@@ -1,0 +1,112 @@
+.App {
+}
+
+.App-header {
+  background-color: #c3c3c3;
+  min-height: 18vh;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.important-info {
+  float: right;
+  color: white;
+  background-color: #f82200;
+}
+
+div.scrollable {
+overflow-y:scroll;
+height:400px;
+}
+
+.instrument-entry {
+  text-align: center;
+  padding-left: 2rem;
+}
+
+.result-container {
+  max-height: 400px;
+  overflow-x: hidden;
+  overflow-y: auto; 
+}
+
+.customer-watchlist-container .flex-fill {
+  width: 33.33%;
+}
+
+.customer-watchlist-container .result-container .list-group {
+  box-shadow: none;  
+}
+
+.customer-watchlist-container .result-container .list-group:hover .list-group-item {
+  background-color: #fafafa;
+}
+
+.customer-watchlist-container .result-container .list-group .list-group-item {
+  border-bottom: none;
+  transition: .3s all ease;
+}
+
+.customer-watchlist-container .result-container .list-group-item {
+  padding: .5rem 1rem;
+}
+
+.react-select-container,
+.react-select-container:focus {
+  outline: none;
+}
+
+.react-select-container .react-select__indicator-separator {
+  margin: 0;
+  background-color: rgba(219, 222, 230, 0.8);
+}
+
+.react-select-container .react-select__control,
+.react-select-container .react-select__control:hover {
+  border-color: rgba(219, 222, 230, 0.8);
+  background-color: #fafafa;
+}
+
+.react-select-container .react-select__control--menu-is-open,
+.react-select-container .react-select__control--is-focused,
+.react-select-container .react-select__control--menu-is-open:hover,
+.react-select-container .react-select__control--is-focused:hover {
+  border-color: #2080d3;
+  box-shadow: none;
+}
+
+.react-select-container .react-select__menu {
+  margin: 0;
+  padding: 0;
+  border: solid 0.063rem rgba(219, 222, 230, 0.8);
+  border-radius: 0;
+  box-shadow: 0 0 12px 0 rgba(82, 63, 105, 0.05);
+  z-index: 1000;
+}
+
+.react-select-container .react-select__menu-list {
+  margin: 0;
+  padding: 0;
+}
+
+.react-select-container .react-select__option {
+  background-color: #fafafa;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.react-select-container .react-select__option:hover,
+.react-select-container .react-select__option--is-focused,
+.react-select-container .react-select__option--is-focused:hover {
+  background-color: #fff;
+}
+
+.react-select-container .react-select__option--is-selected,
+.react-select-container .react-select__option--is-selected:hover {
+  background-color: #2080d3;
+}

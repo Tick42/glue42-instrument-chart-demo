@@ -1,0 +1,39 @@
+2995 -> Code in BBG
+10009 -> Currency
+10012 -> Some kind of a name
+10013 -> Instrument type (Common Shares)
+10019	-> Some kind of a code of the instrument
+10034 -> Country code
+10636 -> Dunno (100)
+10650 -> Dunno (75.42)
+10651 -> Dunno (73.71)
+10652 -> Dunno (64.31)
+10653 -> Dunno (62.20)
+10654 -> Dunno (72.36)
+10656 -> Dunno (58.37)
+10676 -> Dunno (BATS)
+10724 -> Dunno (USNASD)
+10725 -> Dunno (USNASD)
+10726 -> Dunno (AABA)
+11735 -> Dunno (Equity)
+13377 -> Full name (Altaba Inc)
+Time in minutes of the day (0..1440)
+Last price -> 75.98
+Last volume -> 49
+Bid price
+Bid size
+Ask price
+Ask size
+Cumulative volume -> 493732
+Open price -> 75.81
+High price -> 76.1
+Low price -> 75.34
+Yesterday's close price -> 76.1
+# trades since market opening -> 4076
+Bit flag to updated last/high/low/open/vol/composite -> 19
+Trade indicator flag -> S
+Official price / Base price for Japan -> 75.98
+Original Trade time (Trace) - ms since midnight -> 57954544
+Source of realtime message -> PID
+STATE -> 1
+
