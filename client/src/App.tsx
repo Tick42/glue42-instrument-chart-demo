@@ -7,7 +7,7 @@ import { DisplayEntry, DefaultDisplayEntry } from './lib/displayEntry';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Glue, {Glue42} from 'tick42-glue';
+import Glue, {Glue42} from '@glue42/desktop';
 import InstrumentChart from './components/demo-chart';
 
 declare global {
@@ -30,7 +30,6 @@ class App extends Component<{}, {title: string, security: DisplayEntry, data: an
     this.glue42ChannelUpdated = this.glue42ChannelUpdated.bind(this);
     this.glue42ContextUpdated = this.glue42ContextUpdated.bind(this);
     this.useChannels = this.getQueryStringVal(window.location.href, Config.useChannelsParamName) === 'true';
-//    Glue({ channels: useChannels }).then(this.glue42Initialized);
   }
 
   glue42Initialized(glue: Glue42.Glue) {
@@ -43,7 +42,8 @@ class App extends Component<{}, {title: string, security: DisplayEntry, data: an
     }
   }
 
-  glue42ChannelUpdated(data: any, channelInfo: any) {
+  async glue42ChannelUpdated(data: any, channelInfo: any) {
+    console.log('aaaaaa');
     let newRic: SymbolMap;
     let title = this.getTitlePerRic(null);
     
@@ -54,7 +54,7 @@ class App extends Component<{}, {title: string, security: DisplayEntry, data: an
       newRic = Config.SymbolsMap[Config.DefaultSymbol];
     }
     if (newRic.glue42 !== this.state.security.ric) {
-      this.reInitDisplay(title, newRic);
+      await this.reInitDisplay(title, newRic);
     }
 
     return () => { };
@@ -77,7 +77,7 @@ class App extends Component<{}, {title: string, security: DisplayEntry, data: an
     return `${ric.glue42}`;
   }
 
-  reInitDisplay(title: string, newRic: SymbolMap) {
+  async reInitDisplay(title: string, newRic: SymbolMap) {
     const newSecurity = {
       ric: newRic.glue42,
       bidsize: 0,
@@ -90,37 +90,29 @@ class App extends Component<{}, {title: string, security: DisplayEntry, data: an
     const historyRic = Config.SymbolsMap[newRic.glue42].yf;
     const historicDataUrl = `${Config.DataUrlBase}${historyRic}`;
     console.log(`Fetching historical data for ${historyRic}...`);
-    fetch(historicDataUrl).then((result) => {
-      return result.json();
-    }).then((data) => {
-			const mdata = data.records.map((entry:any) => {
-				const {date, ...rest} = entry;
-				const dateAsObj = new Date(parseInt(`${date}000`));
-				return {date: dateAsObj, ...rest};
-			})
-			this.setState({data: mdata});
-    })
+    const historicDataResult = await fetch(historicDataUrl);
+    const historicData = await historicDataResult.json();
+    const mdata = historicData.records.map((entry:any) => {
+      const {date, ...rest} = entry;
+      const dateAsObj = new Date(parseInt(`${date}000`));
+      return {date: dateAsObj, ...rest};
+    });
+    this.setState({data: mdata});
 
   }
 
-  componentDidMount() {
-
-    fetch('http://localhost:22060/username').then((response) => {
-      return response.text();
-    }).then((username => {
-      Glue({appManager: false, auth:{username, password: 'password'}, gateway: { protocolVersion: 3, ws: 'ws://localhost:8385', }, channels: this.useChannels, windows: false }).then(this.glue42Initialized);
+  async componentDidMount() {
+    const glue = await Glue({channels: this.useChannels});
+    this.glue42Initialized(glue);
     const historicDataUrl = `${Config.DataUrlBase}${Config.SymbolsMap[Config.DefaultSymbol].yf}`;
-    fetch(historicDataUrl).then((result) => {
-      return result.json();
-    }).then((data) => {
-			const mdata = data.records.map((entry:any) => {
-				const {date, ...rest} = entry;
-				const dateAsObj = new Date(parseInt(`${date}000`));
-				return {date: dateAsObj, ...rest};
-			})
-			this.setState({data: mdata});
-    })
-    }))
+    let result = await fetch(historicDataUrl);
+    let data = await result.json();
+    const mdata = data.records.map((entry:any) => {
+      const {date, ...rest} = entry;
+      const dateAsObj = new Date(parseInt(`${date}000`));
+      return {date: dateAsObj, ...rest};
+    });
+    this.setState({data: mdata});
   }
 
   getQueryStringVal(url: string, paramName: string) : string | null {
