@@ -1,4 +1,5 @@
 const ystocks = require('yahoo-stocks');
+const yf = require('yahoo-finance');
 const express = require('express');
 const bodyParser = require('body-parser');
 const colors = require('colors');
@@ -15,7 +16,7 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
-})
+}) 
 
 app.use('/', express.static('client/build'));
 
@@ -34,7 +35,12 @@ app.get('/rest', function (req, res) {
     return;
   }
 
-  ystocks.history(instrument, fetchOptions).then(response => {
+  yf.history({
+    symbol: instrument,
+    from: '2012-01-01',
+    to: '2012-12-31',
+    period: 'd'
+  }).then(response => {
     const adjustedResponse = response;
     adjustedResponse.records = adjustedResponse.records.map((rec) => {
       const { time, ...rest } = rec;
