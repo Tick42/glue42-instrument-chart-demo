@@ -94,11 +94,13 @@ class App extends Component<{ glue: Glue42.Glue }, { title: string, security: Di
     fetch(historicDataUrl).then((result) => {
       return result.json();
     }).then((data) => {
-      const mdata = data.records.map((entry: any) => {
+      const mdata = data.map((entry: any) => {
         const { date, ...rest } = entry;
-        const dateAsObj = new Date(parseInt(`${date}000`));
+        const dateAsObj = new Date(date);
         return { date: dateAsObj, ...rest };
-      })
+      }).sort(
+        (a: any, b:any) => a.date.getTime() - b.date.getTime()
+      )
       this.setState({ data: mdata });
     })
 
@@ -108,24 +110,6 @@ class App extends Component<{ glue: Glue42.Glue }, { title: string, security: Di
     this.glue42Initialized(this.props.glue);
     const ctx = this.glue.windows!.my().context
     this.glue42ContextUpdated(ctx);
-    // (this.glue.contexts as any).get(Config.sharedContextName)
-    //   .then((ctx: any) => {
-    //     console.log(ctx)
-    //     const defaultSymbol = ctx.ticker || Config.DefaultSymbol;
-    //     const historicDataUrl = `${Config.DataUrlBase}${Config.SymbolsMap[defaultSymbol].yf}`;
-    //     return fetch(historicDataUrl) as Promise<any>;
-    //   })
-    //   .then((result: any) => {
-    //     return result.json();
-    //   })
-    //   .then((data: any) => {
-    //     const mdata = data.records.map((entry: any) => {
-    //       const { date, ...rest } = entry;
-    //       const dateAsObj = new Date(parseInt(`${date}000`));
-    //       return { date: dateAsObj, ...rest };
-    //     })
-    //     this.setState({ data: mdata });
-    //   })
   }
 
   getQueryStringVal(url: string, paramName: string): string | null {

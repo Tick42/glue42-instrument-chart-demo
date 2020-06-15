@@ -4,7 +4,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const colors = require('colors');
 const fs = require('fs');
+const moment = require('moment')
 const port = 5005;
+
 
 const fileOptions = { encoding: 'utf-8' };
 const fetchOptions = { interval: '1d', range: '5y' };
@@ -12,51 +14,41 @@ const cacheDir = './.cache';
 
 const app = express()
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
-}) 
+})
 
 app.use('/', express.static('client/build'));
 
 app.get('/rest', function (req, res) {
-//  var reqBody = bodyParser.raw();
-//  const instrument = reqBody.instrument;
+
   const instrument = req.query.instrument;
+  console.log(instrument)
   if (!instrument) {
     res.send('');
     return;
   }
+  
+  const end = moment().format('YYYY-MM-DD');
+  const start = moment().subtract(1, 'years').format('YYYY-MM-DD');
 
-  const filePath = `${cacheDir}/${instrument}`;
-  if (fs.existsSync(filePath)) {
-    res.send(fs.readFileSync(filePath, fileOptions));
-    return;
-  }
+  console.log(start)
+  console.log(end)
 
-  yf.history({
+  yf.historical({
     symbol: instrument,
-    from: '2012-01-01',
-    to: '2012-12-31',
+    from: start,
+    to: end,
     period: 'd'
-  }).then(response => {
-    const adjustedResponse = response;
-    adjustedResponse.records = adjustedResponse.records.map((rec) => {
-      const { time, ...rest } = rec;
-      return {
-        date: time,
-        ...rest
-      }
-    });
-    const responseAsString = JSON.stringify(adjustedResponse);
-    if (!fs.existsSync(cacheDir)) {
-      fs.mkdirSync(cacheDir, 0744);
+  }, (err, quotes) => {
+    if (err) {
+      throw err
     }
-    fs.writeFileSync(filePath, responseAsString, fileOptions);
-    res.send(responseAsString);
-    return;
-  });
+    // const responseAsString = JSON.stringify(quotes);
+    res.send(quotes);
+  })
 })
 
 console.log('\033c');
